@@ -6,6 +6,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "@thirdweb-dev/react": "^3.6.9",
+    "@thirdweb-dev/sdk": "^3.6.9",
+    "crypto-js": "^4.1.1",
+    "ethers": "^5.7.2",
+    "identicon": "^3.1.1",
+    "identicon.js": "^2.3.3",
     "next": "latest",
     "react": "18.2.0",
     "react-dom": "18.2.0"

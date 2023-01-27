@@ -1,0 +1,2 @@
+import indeticon from 'identicon';
+
