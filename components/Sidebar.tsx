@@ -1,42 +1,47 @@
-import { useAddress, ConnectWallet } from "@thirdweb-dev/react";
-import sha256 from "crypto-js/sha256";
-import Identicon from "identicon.js";
-import { useEffect, useState } from "react";
+import React from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
-interface ISidebarItemProps {
+interface LayoutProps {
   children: React.ReactNode;
 }
 
-const Sidebar = ({ children }: ISidebarItemProps) => {
-  const address = useAddress();
-  const [profileImg, setProfileImg] = useState<string | null>(null);
+interface SidebarItemProps {
+  title: string;
+  link: string;
+}
 
-  useEffect(() => {
-    if (address) {
-      const data = new Identicon(sha256(address).toString(), 420).toString();
-      setProfileImg(`data:image/png;base64,${data}`);
-    }
-  }, [address]);
+const SidebarItem = ({ title, link }: SidebarItemProps) => {
+  const router = useRouter();
+  const isActive = router.pathname === link;
 
   return (
-    <div className="relative h-screen">
-      <div className="absolute top-0 left-0 z-10 w-64 h-full bg-gray-900">
-        <div className="p-4 flex flex-col justify-center items-center text-center">
-          <img
-            src={profileImg || "https://via.placeholder.com/300"}
-            className="w-48 h-48 rounded-full object-cover"
-            alt="Profile"
-          />
-        </div>
-        <div className="px-10">
-          <ConnectWallet />
-        </div>
+    <li className="py-2">
+      <Link
+        href={link}
+        className={`${
+          isActive ? "bg-slate-300 text-blue-600 font-bold" : "bg-slate-200"
+        } block px-4 py-2  hover:bg-slate-300`}
+      >
+        {title}
+      </Link>
+    </li>
+  );
+};
+
+const Layout = ({ children }: LayoutProps) => {
+  return (
+    <div className="flex">
+      <div className="w-1/6 bg-slate-200 h-screen">
+        <ul className="py-4">
+          <SidebarItem title="Campaigns" link="/" />
+          <SidebarItem title="Brands" link="/brands" />
+          <SidebarItem title="Creators" link="/creators" />
+        </ul>
       </div>
-      <div className="relative z-0 flex-1 overflow-y-scroll">
-        <div className="px-6 py-4">{children}</div>
-      </div>
+      <main className="w-5/6 p-4">{children}</main>
     </div>
   );
 };
 
-export default Sidebar;
+export default Layout;

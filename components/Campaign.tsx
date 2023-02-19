@@ -16,7 +16,7 @@ const Campaign = ({
   id,
 }: ICampaignProps) => {
   return (
-    <div className="relative p-6 rounded-lg bg-white shadow-xl">
+    <div className="p-6 max-h-fit rounded-lg bg-white shadow-xl">
       <img src={image} alt="Blog Image" className="w-full rounded-t-lg" />
       <div className="pt-4">
         <div className="flex justify-between items-center">
